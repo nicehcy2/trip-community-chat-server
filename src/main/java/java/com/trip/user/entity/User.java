@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.com.trip.user.dto.SignupRequestDto;
 import java.com.trip.user.entity.enums.Gender;
 import java.com.trip.user.entity.enums.UserRole;
 import java.time.LocalDate;
@@ -75,7 +76,7 @@ public class User extends BaseEntity {
                 .email(dto.email())
                 .password(encodedPassword)
                 .userRole(UserRole.USER)
-                .imageUrl(dto.imageUrl())
+                .profileImageUrl(dto.profileImageUrl())
                 .status(true)
                 .inActiveDate(null)
                 .build();
