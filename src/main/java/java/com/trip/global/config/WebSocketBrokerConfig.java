@@ -2,6 +2,7 @@ package java.com.trip.global.config;
 
 import java.com.trip.global.interceptor.StompSessionInterceptor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -16,6 +17,18 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
 
     private final StompSessionInterceptor stompSessionInterceptor;
+
+    @Value("${spring.rabbitmq.host}")
+    private String rabbitmqHost; // RabbitMQ 서버 주소
+
+    @Value("${spring.rabbitmq.stomp.port}")
+    private int rabbitmqStompPort; // RabbitMQ STOMP 포트 (AMQP 5672와 다름, 기본값 61613)
+
+    @Value("${spring.rabbitmq.username}")
+    private String rabbitmqUsername; // RabbitMQ 계정
+
+    @Value("${spring.rabbitmq.password}")
+    private String rabbitmqPassword; // RabbitMQ 비밀번호
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
@@ -47,11 +60,18 @@ public class WebSocketBrokerConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
 
-        /**
-         * Kafka (외부브로커) 사용
-         */
         registry.setPathMatcher(new AntPathMatcher(".")); // URL을 / -> .으로
         registry.setApplicationDestinationPrefixes("/pub");  //  @MessageMapping 메서드로 라우팅된다.  Client에서 SEND 요청을 처리
-        registry.enableSimpleBroker("/sub"); // /sub/{chatNo} 로 주제 구독 가
+
+        // TODO: SSL이 필요하면 TCP 연결 설정이 필요할 수도 있다.
+
+        // StompBrokerRelay 사용
+        registry.enableStompBrokerRelay("/sub")
+                .setRelayHost(rabbitmqHost)
+                .setRelayPort(rabbitmqStompPort) // RabbitMQ STOMP 전용 포트 (AMQP 5672랑 다름)
+                .setClientLogin(rabbitmqUsername)
+                .setClientPasscode(rabbitmqPassword)
+                .setSystemLogin(rabbitmqUsername)
+                .setSystemPasscode(rabbitmqPassword);
     }
 }
