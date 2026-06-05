@@ -1,4 +1,4 @@
-package java.com.trip.chat.repository.mongo;
+package java.com.trip.chat.entity;
 
 import lombok.Builder;
 import lombok.Getter;

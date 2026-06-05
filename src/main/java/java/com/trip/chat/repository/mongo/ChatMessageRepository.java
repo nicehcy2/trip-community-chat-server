@@ -1,8 +1,8 @@
-package java.com.trip.chat.repository;
+package java.com.trip.chat.repository.mongo;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.com.trip.chat.repository.mongo.ChatMessage;
+import java.com.trip.chat.entity.ChatMessage;
 import java.util.List;
 
 public interface ChatMessageRepository extends MongoRepository<ChatMessage, String> {
