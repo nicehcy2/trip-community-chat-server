@@ -25,6 +25,9 @@ dependencies {
 	/* Redis */
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+	/* TSID */
+	implementation 'com.github.f4b6a3:tsid-creator:5.2.6'
+
 	/* Jwt */
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
