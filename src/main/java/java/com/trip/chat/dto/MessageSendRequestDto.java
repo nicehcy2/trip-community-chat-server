@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-import java.com.trip.chat.dto.enums.MessageType;
+import java.com.trip.chat.entity.enums.MessageType;
 import java.util.UUID;
 
 public record MessageSendRequestDto(

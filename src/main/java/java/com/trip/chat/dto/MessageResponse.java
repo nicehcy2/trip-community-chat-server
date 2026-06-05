@@ -1,6 +1,6 @@
 package java.com.trip.chat.dto;
 
-import java.com.trip.chat.dto.enums.MessageType;
+import java.com.trip.chat.entity.enums.MessageType;
 
 public record MessageResponse(
 
